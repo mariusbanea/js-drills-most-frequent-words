@@ -1,12 +1,37 @@
-function mostFrequentWord(words) {
+// returns an alphabetically sorted list of words, removing punctuation and returns characters, and apostrophes
+function getTokens(rawString) {
+    //using Regular expresions https://en.wikipedia.org/wiki/Regular_expression for details and http://regexr.com/ to experience it
+    var rawStringLowerCased = rawString.toLowerCase();
+    console.log("rawStringLowerCased = ", rawStringLowerCased);
 
-    console.log("final tokenized text = ", words);
+    //remove returns
+    var rawStringWihtoutReturns = rawStringLowerCased.replace(/(\r\n|\n|\r)/gm, "");
+    console.log("rawStringWihtoutReturns = ", rawStringWihtoutReturns);
+
+    //remove apostrophes
+    var rawStringWihtoutApostrophe = rawStringWihtoutReturns.replace(/'/gm, '');
+    console.log("rawStringWihtoutApostrophe = ", rawStringWihtoutApostrophe);
+
+    //remove punctuation and convert the string into an array by using the split method
+    var rawStringWihtoutPunctuation = rawStringWihtoutApostrophe.split(/[ ,!.";():-]+/g);
+    console.log("rawStringWihtoutPunctuation = ", rawStringWihtoutPunctuation);
+
+    //filter(Boolean) removes all falsy (false, null, undefined, 0, NaN or an empty string) items out of an array
+    var finalTokenizedTextSorted = rawStringWihtoutPunctuation.filter(Boolean).sort();
+    console.log("final tokenized text = ", finalTokenizedTextSorted);
+
+    return finalTokenizedTextSorted;
+}
+
+
+//return the most frequent word from the tokenized text
+function mostFrequentWord(words) {
 
     //create the output object
     var wordFrequencies = {};
     //loop through the words array
     for (var i = 0; i <= words.length; i++) {
-        //if the unique word is insdie the wordFrequencies object increment the number of time it was used
+        //if the unique word is inside the wordFrequencies object increment the number of time it was used
         if (words[i] in wordFrequencies) {
             wordFrequencies[words[i]]++;
         }
@@ -44,25 +69,6 @@ function mostFrequentWord(words) {
    Nothing to see here!
 */
 
-
-
-function getTokens(rawString) {
-    // returns an alphabetically sorted list of words, removing punctuation and returns characters, and apostrophes
-    //using Regular expresions https://en.wikipedia.org/wiki/Regular_expression for details and http://regexr.com/ to experience it
-    var rawStringLowerCased = rawString.toLowerCase();
-    console.log("rawStringLowerCased = ", rawStringLowerCased);
-
-    var rawStringWihtoutReturns = rawStringLowerCased.replace(/(\r\n|\n|\r)/gm, "");
-    console.log("rawStringWihtoutReturns = ", rawStringWihtoutReturns);
-
-    var rawStringWihtoutApostrophe = rawStringWihtoutReturns.replace(/'/gm, '');
-    console.log("rawStringWihtoutApostrophe = ", rawStringWihtoutApostrophe);
-
-    var rawStringWihtoutPunctuation = rawStringWihtoutApostrophe.split(/[ ,!.";():-]+/g);
-    console.log("rawStringWihtoutPunctuation = ", rawStringWihtoutPunctuation);
-
-    return rawStringWihtoutPunctuation.filter(Boolean).sort();
-}
 
 
 (function testMostFrequentWord() {
